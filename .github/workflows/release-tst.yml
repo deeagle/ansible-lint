@@ -62,7 +62,8 @@ jobs:
           images: docdee/ansible-lint
           tags: |
             type=ref,event=branch
-            type=sha,prefix=dev-,suffix=${{ needs.semantic.outputs.app_date }}
+            type=sha,prefix=dev-,suffix=-${{ needs.semantic.outputs.app_date }}
+            type=raw,value=${{ needs.semantic.outputs.app_date }}
 
       - name: Build and push
         uses: docker/build-push-action@v2
