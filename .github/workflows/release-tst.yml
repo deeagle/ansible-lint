@@ -22,6 +22,11 @@ jobs:
         with:
           node-version: "16"
 
+      - name: store var
+        run: |
+          PATH=$(pwd)
+          echo "app_path=$PATH" >> $GITHUB_ENV
+
       - name: Install dependencies
         run: npm install @semantic-release/changelog @semantic-release/git @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/exec @semantic-release/git semantic-release/release-notes-generator
 
@@ -29,3 +34,6 @@ jobs:
         run: npx semantic-release -d
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: load var
+        run: echo ${{ env.app_path }}
