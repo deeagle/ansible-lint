@@ -14,23 +14,13 @@ jobs:
     name: Semantic-Release-Check
     runs-on: ubuntu-latest
     outputs:
-      output1: ${{ steps.step1.outputs.test }}
-      output2: ${{ steps.step2.outputs.test }}
-      app_path: ${{ steps.step3.outputs.app_path }}
+      app_date: ${{ steps.step3.outputs.app_date }}
     steps:
-      - name: id1
-        id: step1
-        run: echo "::set-output name=test::hello"
-
-      - name: id2
-        id: step2
-        run: echo "::set-output name=test::world"
-
       - name: AppPath-Var
         id: step3
         run: |
-          PATH=$(pwd)
-          echo "::set-output name=app_path::${PATH}"
+          DATE=$(date +%s)
+          echo "::set-output name=app_date::${DATE}"
 
       - name: Checkout code
         uses: actions/checkout@master
@@ -40,11 +30,6 @@ jobs:
         with:
           node-version: "16"
 
-      - name: store var
-        run: |
-          PATH=$(pwd)
-          echo "app_path=$PATH" >> $GITHUB_ENV
-
       - name: Install dependencies
         run: npm install @semantic-release/changelog @semantic-release/git @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/exec @semantic-release/git semantic-release/release-notes-generator
 
@@ -52,9 +37,6 @@ jobs:
         run: npx semantic-release -d
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: load var
-        run: echo ${{ env.app_path }}
 
   notify:
     needs: semantic
@@ -64,11 +46,29 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@master
 
-      - name: load var
-        run: echo ${{ env.app_path }}
-
-      - name: load steps var
-        run: echo ${{ needs.semantic.outputs.output1 }} ${{ needs.semantic.outputs.output2 }}
-
       - name: load app_path var
-        run: echo ${{ needs.semantic.outputs.app_path }}
+        run: echo ${{ needs.semantic.outputs.app_date }}
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: docdee/ansible-lint
+          tags: |
+            type=ref,event=branch
+            type=sha,prefix=dev-,suffix=${{ needs.semantic.outputs.app_date }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
