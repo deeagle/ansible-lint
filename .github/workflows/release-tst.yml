@@ -25,6 +25,11 @@ jobs:
       - name: Install dependencies
         run: npm install @semantic-release/changelog @semantic-release/git @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/exec @semantic-release/git semantic-release/release-notes-generator
 
+      - name: Git WTF?
+        run: |
+          which git
+          git status
+
       - name: Get the last tag via git (before release)
         run: git describe --tags $(git rev-list --tags --max-count=1)
 
