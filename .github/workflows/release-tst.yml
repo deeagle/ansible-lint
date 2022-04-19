@@ -31,6 +31,9 @@ jobs:
           git status
           ls
 
+      - name: Git fetch tags (Workaround shallow clones)
+        run: git fetch --tags
+
       - name: Git describe??
         run: |
           git rev-list --tags --max-count=1
