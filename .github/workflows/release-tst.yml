@@ -13,7 +13,18 @@ jobs:
   semantic:
     name: Semantic-Release-Check
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.step1.outputs.test }}
+      output2: ${{ steps.step2.outputs.test }}
     steps:
+      - name: id1
+        id: step1
+        run: echo "::set-output name=test::hello"
+
+      - name: id2
+        id: step2
+        run: echo "::set-output name=test::world"
+
       - name: Checkout code
         uses: actions/checkout@master
 
@@ -38,6 +49,9 @@ jobs:
       - name: load var
         run: echo ${{ env.app_path }}
 
+      - name: store step-var
+        id: app_path
+
   notify:
     needs: semantic
     runs-on: ubuntu-latest
@@ -48,3 +62,6 @@ jobs:
 
       - name: load var
         run: echo ${{ env.app_path }}
+
+      - name: load steps var
+        run: echo ${{needs.semantic.outputs.output1}} ${{needs.semantic.outputs.output2}}
