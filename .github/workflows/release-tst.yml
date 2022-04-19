@@ -37,3 +37,14 @@ jobs:
 
       - name: load var
         run: echo ${{ env.app_path }}
+
+  notify:
+    needs: semantic
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+
+      - name: load var
+        run: echo ${{ env.app_path }}
