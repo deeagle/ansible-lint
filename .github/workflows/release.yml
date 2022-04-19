@@ -26,3 +26,6 @@ jobs:
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Show version from precommand execution
+        run: echo ${NEXT_VERSION}
