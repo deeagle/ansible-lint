@@ -26,3 +26,9 @@ jobs:
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Show version from precommand execution
+        run: echo ${NEXT_VERSION}
+
+      - name: Get the last tag via git
+        run: git describe --tags $(git rev-list --tags --max-count=1)
