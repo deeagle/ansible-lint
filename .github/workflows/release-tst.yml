@@ -49,9 +49,6 @@ jobs:
       - name: load var
         run: echo ${{ env.app_path }}
 
-      - name: store step-var
-        id: app_path
-
   notify:
     needs: semantic
     runs-on: ubuntu-latest
@@ -64,4 +61,4 @@ jobs:
         run: echo ${{ env.app_path }}
 
       - name: load steps var
-        run: echo ${{needs.semantic.outputs.output1}} ${{needs.semantic.outputs.output2}}
+        run: echo ${{ needs.semantic.outputs.output1 }} ${{ needs.semantic.outputs.output2 }}
