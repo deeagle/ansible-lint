@@ -71,4 +71,4 @@ jobs:
         run: echo ${{ needs.semantic.outputs.output1 }} ${{ needs.semantic.outputs.output2 }}
 
       - name: load app_path var
-        run echo ${{ needs.semantic.outputs.app_path }}
+        run: echo ${{ needs.semantic.outputs.app_path }}
