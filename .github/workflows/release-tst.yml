@@ -16,6 +16,7 @@ jobs:
     outputs:
       output1: ${{ steps.step1.outputs.test }}
       output2: ${{ steps.step2.outputs.test }}
+      app_path: ${{ steps.step3.outputs.app_path }}
     steps:
       - name: id1
         id: step1
@@ -24,6 +25,12 @@ jobs:
       - name: id2
         id: step2
         run: echo "::set-output name=test::world"
+
+      - name: AppPath-Var
+        id: step3
+        run: |
+          PATH=$(pwd)
+          echo "::set-output name=app_path::${PATH}"
 
       - name: Checkout code
         uses: actions/checkout@master
@@ -62,3 +69,6 @@ jobs:
 
       - name: load steps var
         run: echo ${{ needs.semantic.outputs.output1 }} ${{ needs.semantic.outputs.output2 }}
+
+      - name: load app_path var
+        run echo ${{ needs.semantic.outputs.app_path }}
