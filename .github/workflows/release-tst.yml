@@ -29,6 +29,13 @@ jobs:
         run: |
           which git
           git status
+          ls
+
+      - name: Git describe??
+        run: |
+          git rev-list --tags --max-count=1
+          git describe --tags
+          git describe --tags $(git rev-list --tags --max-count=1)
 
       - name: Get the last tag via git (before release)
         run: git describe --tags $(git rev-list --tags --max-count=1)
