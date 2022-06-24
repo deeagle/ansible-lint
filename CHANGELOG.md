@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.0.2](https://github.com/deeagle/ansible-lint/compare/v1.0.1...v1.0.2) (2022-06-24)
+
+
+### Bug Fixes
+
+* **dockerfile:** adapt container infos ([79a3d9d](https://github.com/deeagle/ansible-lint/commit/79a3d9dde07174d36b7bb5c6bd81373e0eaa3d8f))
+
 ## [1.0.1](https://github.com/deeagle/ansible-lint/compare/v1.0.0...v1.0.1) (2022-04-19)
 
 
