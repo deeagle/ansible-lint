@@ -8,3 +8,7 @@ LABEL org.opencontainers.image.authors="Martin Kock <code@deeagle.de>" \
 
 
 RUN apk --no-cache add ansible-lint
+
+COPY ["lint-test.yml", "/opt/lint-test.yml"]
+
+RUN ["ansible-lint", "/opt/lint-test.yml"]
