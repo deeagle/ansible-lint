@@ -12,7 +12,7 @@ RUN apk --no-cache add ansible-lint \
                        py3-pip \
                        yamllint
 
-RUN pip3 install ansible-lint
+RUN pip3 install --no-cache-dir ansible-lint==6.17.0
 
 COPY ["lint-test.yml", "/opt/lint-test.yml"]
 
