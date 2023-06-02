@@ -8,8 +8,10 @@ LABEL org.opencontainers.image.authors="Martin Kock <code@deeagle.de>" \
 
 
 RUN apk --no-cache add ansible-lint \
+                       py3-jsonschema \
+                       py3-pip \
                        yamllint \
-                       py3-jsonschema
+    && pip3 install --no-cache-dir ansible-lint==6.17.0
 
 COPY ["lint-test.yml", "/opt/lint-test.yml"]
 
