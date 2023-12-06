@@ -1,10 +1,15 @@
+---
 name: Release version
 
+permissions:
+  contents: write
+  issues: write
 
 on:
   push:
     branches:
       - master
+      - main
   workflow_dispatch:
   schedule:
     - cron: '0 3 * * 0'
