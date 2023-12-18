@@ -6,6 +6,8 @@ LABEL org.opencontainers.image.authors="Martin Kock <code@deeagle.de>" \
       org.opencontainers.image.description="ansible-lint in an alpine container for CI." \
       org.opencontainers.image.vendor="deeagle.de"
 
+# APT/PIP break system packages (error: externally-managed-environment)
+ENV PIP_BREAK_SYSTEM_PACKAGES=1
 
 RUN apk --no-cache add ansible-lint \
                        py3-jsonschema \
