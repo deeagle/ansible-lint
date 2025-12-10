@@ -13,7 +13,7 @@ RUN apk --no-cache add ansible-lint \
                        py3-jsonschema \
                        py3-pip \
                        yamllint \
-    && pip3 install --no-cache-dir ansible-lint~=24.12.0
+    && pip3 install --no-cache-dir ansible-lint~=25.12.1
 
 COPY ["lint-test.yml", "/opt/lint-test.yml"]
 

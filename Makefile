@@ -8,4 +8,4 @@ ci:
 
 build:
 	docker buildx build -t "docdee/$(CONTAINER_NAME):$(CONTAINER_TAG)" -f Dockerfile --load .
-	docker images | grep "${CONTAINER_NAME}"
+	docker images --format table --filter "reference=*/${CONTAINER_NAME}"
