@@ -64,3 +64,15 @@ If you are currently using this repository:
 
 In most cases, migration is straightforward, as the behavior of `ansible-lint` itself
 remains unchanged.
+
+---
+
+## Examples
+
+```bash
+# run-ci.sh
+echo "Lint Markdown ..."
+md_linter_version="$(docker run --rm -i ${MD_CONTAINER} ${MD_BIN} -v)"
+echo "Using markdown-linter version ${md_linter_version}"
+docker run --rm -i -v "${PWD}/:/code" "${MD_CONTAINER}" "${MD_BIN}" {*.md,!CHANGELOG.md}
+```
