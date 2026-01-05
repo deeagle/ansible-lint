@@ -4,7 +4,15 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+MD_CONTAINER="registry.gitlab.com/pipeline-components/markdownlint-cli2:latest"
+MD_BIN="markdownlint-cli2"
+
 echo "Running CI ..."
+
+echo "Lint Markdown ..."
+md_linter_version="$(docker run --rm -i ${MD_CONTAINER} ${MD_BIN} -v)"
+echo "Using markdown-linter version ${md_linter_version}"
+docker run --rm -i -v "${PWD}/:/code" "${MD_CONTAINER}" "${MD_BIN}" {*.md,!CHANGELOG.md}
 
 echo "Lint Dockerfiles ..."
 docker_linter_version="$(docker run --rm -i ghcr.io/hadolint/hadolint hadolint -v)"
