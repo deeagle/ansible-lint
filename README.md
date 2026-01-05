@@ -70,7 +70,13 @@ remains unchanged.
 ## Examples
 
 ```bash
-# run-ci.sh
+#!/usr/bin/env bash
+# file: run-ci.sh
+
+MD_CONTAINER="registry.gitlab.com/pipeline-components/markdownlint-cli2:latest"
+MD_BIN="markdownlint-cli2"
+
+echo "Running CI ..."
 echo "Lint Markdown ..."
 md_linter_version="$(docker run --rm -i ${MD_CONTAINER} ${MD_BIN} -v)"
 echo "Using markdown-linter version ${md_linter_version}"
